@@ -1,0 +1,23 @@
+{
+  "name": "npmrun",
+  "version": "1.0.0",
+  "description": "Prueba",
+  "main": "index.js",
+  "scripts": {
+    "precompress": "rm -rf dist/*",
+    "compress": "uglifyjs ./src/index.js -o ./dist/index.min.js -c -m",
+    "serve": "serve dist",
+    "sassToCss": "node-sass src/index.sass dist/style.css --watch",
+    "start": "npm run compress && npm run serve"
+  },
+  "author": "Waldo J.",
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.11.0",
+    "serve": "^10.1.1",
+    "uglify-js": "^3.4.9"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.0"
+  }
+}

@@ -1,0 +1,55 @@
+image: node:10.1
+
+stages:
+  - build
+  - deploy
+
+
+node_master:
+  stage: build
+  script:
+  - npm install
+  - CI=false npm run build
+  artifacts:
+    when: on_success
+    paths:
+    - webpack/dist/
+    expire_in: 1 week
+  only:
+  - master
+  tags:
+  - docker
+
+
+node_deploy:
+  image: registry.gitlab.ec.pe/infraestructura/imagesci/awscli/awscli-s3
+  stage: deploy
+  dependencies:
+  - node_master
+  script:
+  - cd webpack/dist
+  #- aws s3 sync . s3://assets-manager-dig/dev/output/assets/componentes/$CI_PROJECT_NAME/dist/ --include '*' --delete
+  #- aws s3 sync . s3://pwa.dev.elcomercio.pe/ --include '*'
+  - aws s3 sync . s3://pic.temporal/ --delete --exclude '*.svg'
+  - aws s3 sync . s3://pic.temporal/ --delete --exclude '*' --include '*.svg' --content-type 'image/svg+xml'
+  only:
+  - master
+  tags:
+  - docker
+
+
+node_deploy_production:
+  image: registry.gitlab.ec.pe/infraestructura/imagesci/awscli/awscli-s3
+  stage: deploy
+  dependencies:
+  - node_master
+  script:
+  - cd build
+  #- aws s3 sync . s3://assets-manager-dig/dev/output/assets/componentes/$CI_PROJECT_NAME/dist/ --include '*' --delete
+  #- aws s3 sync . s3://pwa.elcomercio.pe/ --include '*'
+  - aws s3 sync . s3://pic.temporal/ --delete --exclude '*.svg'
+  - aws s3 sync . s3://pic.temporal/ --delete --exclude '*' --include '*.svg' --content-type 'image/svg+xml'
+  only:
+  - beta
+  tags:
+  - docker

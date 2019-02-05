@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Screen</title>
+</head>
+<body>
+  <div>
+    <div>
+      <video src="./test_video.mp4" autoplay width="500" id="screen"></video>
+    </div>
+      <div>
+        <input type="button" value="full screen" id="fullscreen">
+      </div>
+  </div>
+
+  <script>
+    let $screen = document.getElementById('screen');
+    let $fullscreen = document.getElementById('fullscreen');
+
+    $fullscreen.addEventListener('click', function() {
+      $screen.requestFullscreen();
+    })
+  </script>
+
+</body>
+</html>

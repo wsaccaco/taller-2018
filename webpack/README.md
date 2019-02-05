@@ -1,0 +1,4 @@
+- Crear el manifiesto
+- Agregar las librerias de webpack y webpack-cli
+- configuramos el webpack.config.js
+- 

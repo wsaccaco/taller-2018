@@ -1,0 +1,11 @@
+.content{
+    background-color: skyblue;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .item{
+    background-color: red;
+    color: white;
+    padding: 24px;
+}
